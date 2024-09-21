@@ -1,4 +1,5 @@
-#devggn
+
+#kingofpatal
 
 import time
 import asyncio
@@ -26,7 +27,7 @@ async def single_link(_, message):
         if join == 1:
             return
      
-        msg = await message.reply("Processing...")
+        msg = await message.reply("Processing!")
         data = await db.get_data(user_id)
         
         if data and data.get("session"):
@@ -35,7 +36,7 @@ async def single_link(_, message):
                 userbot = Client(":userbot:", api_id=API_ID, api_hash=API_HASH, session_string=session)
                 await userbot.start()                
             except:
-                return await msg.edit_text("Login expired /login again...")
+                return await msg.edit_text("Please login in bot...")
         else:
             await msg.edit_text("Login in bot first ...")
             return
@@ -76,8 +77,8 @@ async def batch_link(_, message):
     l = last_id.split("/")[-1]
     cl = int(l)
 
-    if cl - cs > 10:
-        await app.send_message(message.chat.id, "Only 10 messages allowed in batch size... Purchase premium to fly 💸")
+    if cl - cs > 1000:
+        await app.send_message(message.chat.id, "Only 1000 messages allowed in batch size... Make sure your start and end message have difference less than 1000")
         return
     
     try:     
@@ -89,9 +90,9 @@ async def batch_link(_, message):
                 userbot = Client(":userbot:", api_id=API_ID, api_hash=API_HASH, session_string=session)
                 await userbot.start()                
             except:
-                return await app.send_message(message.chat.id, "Your login expired ... /login again")
+                return await app.send_message(message.chat.id, "Please generate a new session.")
         else:
-            await app.send_message(message.chat.id, "Login in bot first ...")
+            await app.send_message(message.chat.id, "Please generate a session first.")
 
         try:
             users_loop[user_id] = True
