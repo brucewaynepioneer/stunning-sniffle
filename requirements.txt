@@ -14,3 +14,4 @@ reportlab
 PyMuPDF
 cryptg
 gunicorn
+python-telegram-bot
