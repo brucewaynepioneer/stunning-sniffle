@@ -2,6 +2,7 @@
 
 import asyncio
 import time
+from telegram import Bot
 import os
 import subprocess
 import requests
@@ -416,6 +417,27 @@ def save_replacement_words(user_id, replacements):
     except Exception as e:
         print(f"Error saving replacement words: {e}")
 
+# Function to split the file into 2GB chunks
+def split_file(file_path, chunk_size=2 * 1024 * 1024 * 1024):
+    file_size = os.path.getsize(file_path)
+    base_name = os.path.basename(file_path)
+    part_number = 0
+    
+    with open(file_path, 'rb') as file:
+        while file.tell() < file_size:
+            part_number += 1
+            chunk_data = file.read(chunk_size)
+            part_filename = f"{base_name}.part{part_number}"
+            with open(part_filename, 'wb') as part_file:
+                part_file.write(chunk_data)
+            print(f"Created part: {part_filename}")
+
+# Example usage
+file_path = "largefile.zip"  # Your large file path
+split_file(file_path)
+
+
+
 # Initialize the dictionary to store user preferences for renaming
 user_rename_preferences = {}
 
@@ -613,3 +635,21 @@ async def handle_user_input(event):
             await event.respond(f"Words added to delete list: {', '.join(words_to_delete)}")
 
         del sessions[user_id]
+
+
+# Function to upload the split files
+def upload_file_parts(bot_token, chat_id, parts_directory):
+    bot = Bot(token=bot_token)
+    for part_filename in sorted(os.listdir(parts_directory)):
+        if part_filename.endswith('.part'):
+            file_path = os.path.join(parts_directory, part_filename)
+            with open(file_path, 'rb') as file:
+                bot.send_document(chat_id=chat_id, document=file)
+                print(f"Uploaded {part_filename}")
+
+# Example usage
+bot_token = "your-bot-token"
+chat_id = "your-chat-id"
+parts_directory = "."  # Directory containing the split parts
+upload_file_parts(bot_token, chat_id, parts_directory)
+
