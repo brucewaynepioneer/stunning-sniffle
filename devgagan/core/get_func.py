@@ -432,8 +432,8 @@ def split_file(file_path, chunk_size=2 * 1024 * 1024 * 1024):
                 part_file.write(chunk_data)
             print(f"Created part: {part_filename}")
 
-file_path = "/path/to/your/file/largefile.zip"  # Provide the correct file path
-split_file(file_path)
+# file_path = "/path/to/your/file/largefile.zip"  # Provide the correct file path
+# split_file(file_path)
 
 
 # Initialize the dictionary to store user preferences for renaming
