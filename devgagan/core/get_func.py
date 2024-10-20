@@ -1,3 +1,4 @@
+
 #devgaganin
 
 import asyncio
@@ -91,16 +92,16 @@ async def get_msg(userbot, sender, edit_id, msg_link, i, message):
                 if ggn_ext.isalpha() and len(ggn_ext) <= 4:
                     if ggn_ext.lower() == 'mov':
                         original_file_name = str(file)[:last_dot_index]
-                        file_extension = 'mp4'
+                        file_extension = ''
                     else:
                         original_file_name = str(file)[:last_dot_index]
                         file_extension = ggn_ext
                 else:
                     original_file_name = str(file)
-                    file_extension = 'mp4'
+                    file_extension = ''
             else:
                 original_file_name = str(file)
-                file_extension = 'mp4'
+                file_extension = ''
 
             delete_words = load_delete_words(chatx)
             for word in delete_words:
